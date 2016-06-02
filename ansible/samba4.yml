@@ -1,0 +1,11 @@
+---
+- include: tasks/bs.yml
+- hosts: localhost
+  tasks:
+    - name: "INSTALANDO SAMBA4"
+      yum: pkg=samba state=latest
+      notify: smbd
+
+  handlers:
+    - name: smbd
+      service: name=smb enabled=yes state=restarted

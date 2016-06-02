@@ -1,0 +1,75 @@
+---
+- hosts: localhost
+
+  tasks:
+    - name: "HOSTNAME"
+      hostname: name=django
+
+    - name: "REMOVENDO PACOTES"
+      yum: pkg={{ item }} state=absent
+      with_items:
+        - postfix
+        - su
+
+    - name: "UPGRADE"
+      yum: name=* state=latest
+
+    - name: "BOOTSTRAP"
+      yum: pkg={{ item }} state=latest
+      with_items:
+        - man
+        - links
+        - tmux
+        - corosync
+        - sudo
+        - ntp
+        - ntpdate
+        - mutt
+        - net-snmp
+#        - net-snmp-utils
+        - rsync
+        - at
+        - git
+        - open-vm-tools
+#        - epel-release
+        - iptraf
+        - bzip2
+        - unzip
+        - traceroute
+        - tcpdump
+        - ccze
+        - less
+        - nmap
+        - most
+        - tzdata
+        - aria2
+        - tig
+        - libselinux-python
+
+#    - name: "COPIANDO NTPD.CONF"
+#       copy: src=/opt/ansible/ntp.conf dest=/etc/ntp.conf owner=root group=root mode=644 backup=yes
+#       notify: ntpd
+
+    - name: "SELINUX PERMISSIVE"
+      selinux: state=permissive policy=permissive
+
+    - name: "CONFIGURANDO RELÓGIO"
+      shell: ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+      notify: ntpd
+
+    - name: "CONFIGURANDO SNMP"
+      shell: echo "rocommunity public" >> /etc/snmp/snmpd.conf
+      notify: snmpd
+
+  handlers:
+    - name: "firewald"
+      service: name=firewalld enabled=yes state=restarted
+
+    - name: "ntpd"
+      service: name=ntpd enabled=yes state=restarted
+
+    - name: "snmpd"
+      service: name=snmpd enabled=yes state=restarted
+
+    - name: "sshd"
+      service: name=sshd enabled=yes state=restarted
