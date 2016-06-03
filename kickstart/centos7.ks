@@ -81,8 +81,6 @@ net-snmp
 net-snmp-utils
 nmap
 ntp
-ntp
-ntpdate
 ntpdate
 open-vm-tools
 openvm-tools-nox11
