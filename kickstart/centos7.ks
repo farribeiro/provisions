@@ -71,7 +71,7 @@ ntpdate
 #"openldap-clients",
 mutt
 net-snmp
-net-tools
+#net-tools
 rsync
 at
 epel-release
