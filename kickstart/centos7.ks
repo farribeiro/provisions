@@ -54,6 +54,7 @@ $SNIPPET('pre_anamon')
 %packages
 $SNIPPET('func_install_if_enabled')
 @Development Tools
+#dnf
 #krb5-workstation
 #nscd
 #nss-pam-ldapd
@@ -66,7 +67,6 @@ at
 bzip2
 ccze
 corosync
-dnf
 epel-release
 git
 htop
