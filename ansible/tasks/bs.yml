@@ -22,7 +22,9 @@
         - bzip2
         - ccze
         - corosync
+        - epel-release
         - git
+        - htop
         - iptraf
         - less
         - libselinux-python
@@ -31,10 +33,12 @@
         - most
         - mutt
         - net-snmp
+        - net-snmp-utils
         - nmap
         - ntp
         - ntpdate
         - open-vm-tools
+        - openvm-tools-nox11
         - rsync
         - sudo
         - tcpdump
@@ -43,8 +47,18 @@
         - traceroute
         - tzdata
         - unzip
+        - xzip
 #        - epel-release
 #        - net-snmp-utils
+        #openldap-clients
+        #dnf
+        #krb5-workstation
+        #net-tools
+        #nscd
+        #nss-pam-ldapd
+        #pam_krb5
+        #puppet
+
 
 #    - name: "COPIANDO NTPD.CONF"
 #       copy: src=/opt/ansible/ntp.conf dest=/etc/ntp.conf owner=root group=root mode=644 backup=yes
