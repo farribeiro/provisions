@@ -17,34 +17,34 @@
     - name: "BOOTSTRAP"
       yum: pkg={{ item }} state=latest
       with_items:
-        - man
-        - links
-        - tmux
+        - aria2
+        - at
+        - bzip2
+        - ccze
         - corosync
-        - sudo
-        - ntp
-        - ntpdate
+        - git
+        - iptraf
+        - less
+        - libselinux-python
+        - links
+        - man
+        - most
         - mutt
         - net-snmp
-#        - net-snmp-utils
-        - rsync
-        - at
-        - git
-        - open-vm-tools
-#        - epel-release
-        - iptraf
-        - bzip2
-        - unzip
-        - traceroute
-        - tcpdump
-        - ccze
-        - less
         - nmap
-        - most
-        - tzdata
-        - aria2
+        - ntp
+        - ntpdate
+        - open-vm-tools
+        - rsync
+        - sudo
+        - tcpdump
         - tig
-        - libselinux-python
+        - tmux
+        - traceroute
+        - tzdata
+        - unzip
+#        - epel-release
+#        - net-snmp-utils
 
 #    - name: "COPIANDO NTPD.CONF"
 #       copy: src=/opt/ansible/ntp.conf dest=/etc/ntp.conf owner=root group=root mode=644 backup=yes
