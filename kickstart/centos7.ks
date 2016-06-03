@@ -54,11 +54,11 @@ $SNIPPET('pre_anamon')
 %packages
 $SNIPPET('func_install_if_enabled')
 @Development Tools
-#"krb5-workstation",
-#"nscd",
-#"nss-pam-ldapd",
-#"openldap-clients",
-#"pam_krb5",
+#krb5-workstation
+#nscd
+#nss-pam-ldapd
+#openldap-clients
+#pam_krb5
 #net-tools
 #puppet
 aria2
