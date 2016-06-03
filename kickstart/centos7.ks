@@ -55,13 +55,12 @@ $SNIPPET('pre_anamon')
 $SNIPPET('func_install_if_enabled')
 @Development Tools
 man
-heartbeat
+corosync
 ntp
 ntpdate
 #puppet
 htop
 tmux
-heartbeat
 sudo
 ntp
 ntpdate
