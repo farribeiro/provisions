@@ -10,40 +10,46 @@ class bootstrap {
 	}
 
 	$package_utils = [
-	  - man
-	  - links
-	  - tmux
-	  - corosync
-	  - sudo
-	  - puppet
-	  - ntp
-	  - ntpdate
-		#'nss-pam-ldapd',
-		#'krb5-workstation',
-		#'pam_krb5',
-		#'nscd',
-		#'openldap-clients',
-	  - mutt
-	  - net-snmp
-	  - rsync
-	  - at
-	  - git
-	  - open-vm-tools
-	  - epel-release
-	  - net-tools
-	  - iptraf
-	  - bzip2
-	  - unzip
-	  - traceroute
-	  - tcpdump
-	  - ccze
-	  - less
-		#'most',
-		#'dnsutils',
-	  - nmap
-	  - ruby­augeas
-	  - tzdata
-		]
+		aria2,
+		at,
+		bzip2,
+		ccze,
+		corosync,
+		epel-release,
+		git,
+		htop,
+		iptraf,
+		less,
+		libselinux-python,
+		links,
+		man,
+		most,
+		mutt,
+		net-snmp,
+		net-snmp-utils,
+		nmap,
+		ntp,
+		ntpdate,
+		open-vm-tools,
+		openvm-tools-nox11,
+		rsync,
+		sudo,
+		tcpdump,
+		tig,
+		tmux,
+		traceroute,
+		tzdata,
+		unzip,
+		xzip,
+		#openldap-clients
+		#dnf
+		#krb5-workstation
+		#net-tools
+		#nscd
+		#nss-pam-ldapd
+		#pam_krb5
+		#puppet
+	]
 
 	package { 'tzdata':
 			ensure	=> lastest,
@@ -52,17 +58,7 @@ class bootstrap {
 
 	package {
 		$package_utils:
-			ensure	=> present,
-	}
-
-	package {
-		[
-	  - aria2
-	  - tig
-	  - htop
-		]:
-			ensure	=> present,
-			require	=> Package['epel-release']
+		ensure	=> present,
 	}
 
 	service { 'ntpd':
