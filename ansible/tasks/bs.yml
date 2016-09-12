@@ -49,8 +49,6 @@
         - unbound
         - unzip
         - xzip
-#        - epel-release
-#        - net-snmp-utils
         #openldap-clients
         #dnf
         #krb5-workstation
