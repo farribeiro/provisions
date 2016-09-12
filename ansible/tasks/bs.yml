@@ -46,6 +46,7 @@
         - tmux
         - traceroute
         - tzdata
+        - unbound
         - unzip
         - xzip
 #        - epel-release
@@ -75,6 +76,9 @@
       shell: echo "rocommunity public" >> /etc/snmp/snmpd.conf
       notify: snmpd
 
+    -name: "ATIVANDO CACHER DNS"
+      notify: unbound
+
   handlers:
     - name: "firewald"
       service: name=firewalld enabled=yes state=restarted
@@ -87,3 +91,6 @@
 
     - name: "sshd"
       service: name=sshd enabled=yes state=restarted
+
+    -name: "unbound"
+      service: name=unbound enabled=yes state=started
