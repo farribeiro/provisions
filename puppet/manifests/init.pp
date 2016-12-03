@@ -52,8 +52,8 @@ class bootstrap {
 	]
 
 	package { 'tzdata':
-			ensure	=> lastest,
-		}
+		ensure	=> lastest,
+	}
 
 
 	package {
