@@ -10,6 +10,8 @@
       with_items:
         - postfix
         - su
+        - lynx
+        - vi
 
     - name: "UPGRADE"
       yum: name=* state=latest
@@ -48,6 +50,7 @@
         - tzdata
         - unbound
         - unzip
+        - vim
         - xzip
         #openldap-clients
         #dnf
