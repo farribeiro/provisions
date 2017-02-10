@@ -52,19 +52,19 @@
         - unzip
         - vim
         - xzip
-        #openldap-clients
-        #dnf
-        #krb5-workstation
-        #net-tools
-        #nscd
-        #nss-pam-ldapd
-        #pam_krb5
-        #puppet
 
 
 #    - name: "COPIANDO NTPD.CONF"
 #       copy: src=/opt/ansible/ntp.conf dest=/etc/ntp.conf owner=root group=root mode=644 backup=yes
 #       notify: ntpd
+        # - openldap-clients
+        # - dnf
+        # - krb5-workstation
+        # - net-tools
+        # - nscd
+        # - nss-pam-ldapd
+        # - pam_krb5
+        # - puppet
 
     - name: "SELINUX PERMISSIVE"
       selinux: state=permissive policy=permissive
