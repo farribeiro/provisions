@@ -13,10 +13,10 @@
         - lynx
         - vi
 
-    - name: "UPGRADE"
+    - name: "UPGRADE DOS PACOTES"
       yum: name=* state=latest
 
-    - name: "BOOTSTRAP"
+    - name: "INSTALANDO PACOTES NECESSARIOS"
       yum: pkg={{ item }} state=latest
       with_items:
         - aria2
@@ -54,7 +54,6 @@
         - xzip
 
 
-#    - name: "COPIANDO NTPD.CONF"
 #       copy: src=/opt/ansible/ntp.conf dest=/etc/ntp.conf owner=root group=root mode=644 backup=yes
 #       notify: ntpd
         # - openldap-clients
@@ -69,15 +68,16 @@
     - name: "SELINUX PERMISSIVE"
       selinux: state=permissive policy=permissive
 
-    - name: "CONFIGURANDO RELÓGIO"
+    - name: "CONFIGURANDO SERVIDORES NTP"
+    - name: "CONFIGURANDO TIMEZONE E RESTART NTPD"
       shell: ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
       notify: ntpd
 
+    - name: "CONFIGURANDO CACHE INTERNO DNS"
     - name: "CONFIGURANDO SNMP"
       shell: echo "rocommunity public" >> /etc/snmp/snmpd.conf
       notify: snmpd
 
-    -name: "ATIVANDO CACHER DNS"
       notify: unbound
 
   handlers:
