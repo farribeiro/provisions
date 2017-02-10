@@ -60,6 +60,11 @@
         # - nss-pam-ldapd
         # - pam_krb5
         # - puppet
+        - realmd
+        - oddjob-mkhomedir
+        - sssd
+        - adcli
+        - krb5-workstation
 
     - name: "SELINUX PERMISSIVE"
       selinux: state=permissive policy=permissive
