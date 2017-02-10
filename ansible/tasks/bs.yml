@@ -52,10 +52,6 @@
         - unzip
         - vim
         - xzip
-
-
-#       copy: src=/opt/ansible/ntp.conf dest=/etc/ntp.conf owner=root group=root mode=644 backup=yes
-#       notify: ntpd
         # - openldap-clients
         # - dnf
         # - krb5-workstation
@@ -68,12 +64,31 @@
     - name: "SELINUX PERMISSIVE"
       selinux: state=permissive policy=permissive
 
+    - name: "CONFIGURANDO MOUNTPOINT"
+      shell: mount -t cifs //<machine-depot>/ansible -o user="FABIO",pass="",ro,vers=3.0 /mnt/ansible
+
     - name: "CONFIGURANDO SERVIDORES NTP"
+      copy: src=/mnt/ansible/ntp.conf dest=/etc/ntp.conf owner=root group=root mode=644 backup=yes
+      notify: ntpd
+
     - name: "CONFIGURANDO TIMEZONE E RESTART NTPD"
       shell: ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
       notify: ntpd
 
+    - name: "CONFIGURANDO REALMD"
+      copy: src=/mnt/ansible/realmd.conf dest=/etc/realmd.conf owner=root group=root mode=644 backup=yes
+
     - name: "CONFIGURANDO CACHE INTERNO DNS"
+      copy: src=/mnt/ansible/forward.conf dest=/etc/unbound/forward.conf owner=root group=root mode=644 backup=yes
+      # shell: echo "nameserver: 127.0.0.1" >> /etc/resolv.conf
+      notify: unbound
+
+    - name: "INICIANDO A TROCA DE TICKET COM O KDC"
+      shell: kinit administrator
+
+    - name: "INGRESSANDO O SERVIDOR NO DOMINIO"
+      shell: realm join -v {{ domain }}
+
     - name: "CONFIGURANDO SNMP"
       shell: echo "rocommunity public" >> /etc/snmp/snmpd.conf
       notify: snmpd
