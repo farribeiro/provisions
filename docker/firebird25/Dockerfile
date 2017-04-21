@@ -13,6 +13,5 @@ VOLUME [ "/mnt/" ]
 
 WORKDIR [ "/mnt/" ]
 EXPOSE 3050
-EXPOSE 22
 
 CMD ["/usr/sbin/fbguard"]
