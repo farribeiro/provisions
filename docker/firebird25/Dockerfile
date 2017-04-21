@@ -8,7 +8,8 @@ RUN	apt-get install -y \
 	libstdc++5 \
 	firebird2.5-superclassic
 
-VOLUME /var/
+
+VOLUME [ "/mnt/" ]
 
 EXPOSE 3050
 EXPOSE 22
