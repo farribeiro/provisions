@@ -11,6 +11,7 @@ RUN	apt-get install -y \
 
 VOLUME [ "/mnt/" ]
 
+WORKDIR [ "/mnt/" ]
 EXPOSE 3050
 EXPOSE 22
 
