@@ -8,4 +8,4 @@ RUN	\
 	python-dnf \
 	libselinux-python
 
-WORKDIR /tmp/ansible
+WORKDIR [ "/tmp/ansible" ]
