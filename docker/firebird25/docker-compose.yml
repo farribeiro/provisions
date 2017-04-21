@@ -1,0 +1,8 @@
+version: '2'
+services:
+  fb25:
+    image: ubuntu
+    volumes:
+      - /mnt:/mnt
+    ports:
+      - '3050:3050'
