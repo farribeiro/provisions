@@ -13,4 +13,4 @@ VOLUME "/mnt/"
 
 EXPOSE 3050
 
-CMD "/usr/sbin/fbguard"
+CMD	"/startup.sh"
