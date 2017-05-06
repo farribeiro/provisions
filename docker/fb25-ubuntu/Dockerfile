@@ -9,10 +9,10 @@ RUN	\
 	firebird2.5-superclassic \
 	--no-install-recommends
 
+VOLUME "/mnt/"
 
-VOLUME [ "/mnt/" ]
 
 WORKDIR [ "/mnt/" ]
 EXPOSE 3050
 
-CMD ["/usr/sbin/fbguard"]
+CMD "/usr/sbin/fbguard"
