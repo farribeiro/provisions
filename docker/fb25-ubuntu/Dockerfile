@@ -12,5 +12,8 @@ RUN	\
 VOLUME "/mnt/"
 
 EXPOSE 3050
+COPY	startup.sh /
+
+RUN	chmod 744 startup.sh
 
 CMD	"/startup.sh"
