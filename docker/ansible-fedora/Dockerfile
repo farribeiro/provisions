@@ -1,8 +1,7 @@
 FROM farribeiro/fedora
 MAINTAINER Fábio Rodrigues Ribeiro <farribeiro@gmail.com>
 
-RUN	\
-	dnf update -y \
+RUN	dnf update -y \
 	&& dnf -y install \
 	ansible \
 	python-dnf \
