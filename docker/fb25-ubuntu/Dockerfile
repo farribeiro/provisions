@@ -9,9 +9,10 @@ RUN	\
 	firebird2.5-superclassic \
 	--no-install-recommends
 
-VOLUME "/mnt/"
+VOLUME	"/mnt/"
 
-EXPOSE 3050
+EXPOSE	3050
+
 COPY	startup.sh /
 
 RUN	chmod 744 startup.sh
