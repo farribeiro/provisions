@@ -6,7 +6,8 @@ RUN	\
 	&& apt-get upgrade -y \
 	&& apt-get install -y \
 	libstdc++5 \
-	firebird2.5-superclassic
+	firebird2.5-superclassic \
+	--no-install-recommends
 
 
 VOLUME [ "/mnt/" ]
