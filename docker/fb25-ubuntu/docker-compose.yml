@@ -1,7 +1,6 @@
 version: '2'
 services:
   fb25:
-    image: ubuntu
     volumes:
       - /mnt:/mnt
     ports:
