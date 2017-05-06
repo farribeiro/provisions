@@ -3,8 +3,8 @@ MAINTAINER Fábio Rodrigues Ribeiro <farribeiro@gmail.com>
 
 RUN	\
 	apt-get update \
-	&& apt-get upgrade -y
-RUN	apt-get install -y \
+	&& apt-get upgrade -y \
+	&& apt-get install -y \
 	libstdc++5 \
 	firebird2.5-superclassic
 
