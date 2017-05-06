@@ -1,6 +1,7 @@
 version: '2'
 services:
   fb25:
+    build: .
     volumes:
       - /mnt:/mnt
     ports:
