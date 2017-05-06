@@ -1,4 +1,4 @@
-FROM docker.io/ubuntu
+FROM ubuntu:latest
 MAINTAINER Fábio Rodrigues Ribeiro <farribeiro@gmail.com>
 
 RUN	\
