@@ -14,3 +14,4 @@ USER	gummi
 
 VOLUME "/mnt"
 
+CMD "/startup.sh"
