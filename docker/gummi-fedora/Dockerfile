@@ -12,3 +12,5 @@ RUN	dnf update -y \
 
 USER	gummi
 
+VOLUME "/mnt"
+
