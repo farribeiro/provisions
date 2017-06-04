@@ -10,3 +10,5 @@ RUN	dnf update -y \
 	&& useradd -u 1000 -g gummi gummi \
 	&& chmod +x startup.sh
 
+USER	gummi
+
