@@ -113,5 +113,5 @@
     - name: "sshd"
       service: name=sshd enabled=yes state=restarted
 
-    -name: "unbound"
+    - name: "unbound"
       service: name=unbound enabled=yes state=started
