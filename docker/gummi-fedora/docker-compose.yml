@@ -1,0 +1,15 @@
+version: '2'
+services:
+  gummi:
+    build: .
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=/home/gummi/.Xauthority
+      - HOST_HOSTNAME=${HOSTNAME}
+    cpuset: '0'
+    mem_limit: 512M
+    volumes:
+      - /dev/shm:/dev/shm:Z
+      - /tmp/.X11-unix:/tmp/.X11-unix:Z
+      - ${XAUTHORITY}:/tmp/.docker.xauth:ro,Z
+      - ~/Documentos:/mnt:Z
