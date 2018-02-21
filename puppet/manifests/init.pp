@@ -51,11 +51,6 @@ class bootstrap {
 		#puppet
 	]
 
-	package { 'tzdata':
-		ensure	=> lastest,
-	}
-
-
 	package {
 		$package_utils:
 		ensure	=> present,
