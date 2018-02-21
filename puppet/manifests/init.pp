@@ -63,6 +63,15 @@ class bootstrap {
 		# pattern	=> 'ntpd',
 	}
 
+	file{ '/etc/ntp.conf':
+		ensure	=> file,
+		owner	=> 'root',
+		group	=> 'root',
+		mode	=> '0644',
+		source	=> 'puppet:///modules/bootstrap/ntp.conf',
+		notify	=> Service['ntpd'],
+	}
+
 	service { 'firewalld':
 		ensure		=> stopped,
 		enable		=> false,
@@ -80,13 +89,10 @@ class bootstrap {
 	# }
 
 
-	file{ '/etc/ntp.conf':
 		ensure	=> file,
 		owner	=> 'root',
 		group	=> 'root',
 		mode	=> '0644',
-		source	=> 'puppet:///modules/bootstrap/ntp.conf',
-		notify	=> Service['ntpd'],
 	}
 
 	exec{'yum-update':
