@@ -31,7 +31,7 @@ class bootstrap {
 		ntp,
 		ntpdate,
 		open-vm-tools,
-		openvm-tools-nox11,
+		# openvm-tools-nox11,
 		rsync,
 		sudo,
 		tcpdump,
@@ -40,7 +40,7 @@ class bootstrap {
 		traceroute,
 		tzdata,
 		unzip,
-		xzip,
+		# xzip,
 		#openldap-clients
 		#dnf
 		#krb5-workstation
