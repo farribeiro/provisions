@@ -92,6 +92,4 @@ class bootstrap {
 	exec{'yum-update':
 		command	=> 'yum update -y'
 	}
-
-	# include bootstrap::cloudstack
 }
