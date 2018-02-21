@@ -80,7 +80,7 @@ class bootstrap {
 	# }
 
 
-	file{ '/etc/ntp/ntp.conf':
+	file{ '/etc/ntp.conf':
 		ensure	=> file,
 		owner	=> 'root',
 		group	=> 'root',
