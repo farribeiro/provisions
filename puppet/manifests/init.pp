@@ -40,6 +40,7 @@ class bootstrap {
 		traceroute,
 		tzdata,
 		unzip,
+		unbound,
 		# xzip,
 		#openldap-clients
 		#dnf
@@ -88,11 +89,18 @@ class bootstrap {
 		# mirrorlist	=> '',
 	# }
 
+	service { 'unbound':
+		ensure	=> running,
+		enable	=> true,
+	}
 
+	file { '/etc/unbound/unbound.conf':
 		ensure	=> file,
 		owner	=> 'root',
 		group	=> 'root',
 		mode	=> '0644',
+		source	=> 'puppet:///modules/bootstrap/unbound.conf',
+		notify	=> Service['unbound'],
 	}
 
 	exec{'yum-update':
