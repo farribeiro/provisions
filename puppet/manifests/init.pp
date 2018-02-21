@@ -97,5 +97,17 @@ class bootstrap {
 
 	exec{'yum-update':
 		command	=> 'yum update -y'
+	service {'NetworkManager':
+		ensure	=> running,
+		enable	=> true,
+	}
+
+	file { '/etc/NetworkManager/NetworkManager.conf':
+		ensure	=> file,
+		owner	=> 'root',
+		group	=> 'root',
+		mode	=> '0644',
+		source	=> 'puppet:///modules/bootstrap/NetworkManager.conf',
+		notify	=> Service['NetworkManager'],
 	}
 }
