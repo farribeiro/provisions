@@ -31,7 +31,7 @@ class bootstrap {
 		ntp,
 		ntpdate,
 		open-vm-tools,
-		openvm-tools-nox11,
+		# openvm-tools-nox11,
 		rsync,
 		sudo,
 		tcpdump,
@@ -40,7 +40,8 @@ class bootstrap {
 		traceroute,
 		tzdata,
 		unzip,
-		xzip,
+		unbound,
+		# xzip,
 		#openldap-clients
 		#dnf
 		#krb5-workstation
@@ -50,11 +51,6 @@ class bootstrap {
 		#pam_krb5
 		#puppet
 	]
-
-	package { 'tzdata':
-		ensure	=> lastest,
-	}
-
 
 	package {
 		$package_utils:
@@ -66,6 +62,15 @@ class bootstrap {
 		enable		=> true,
 		require		=> Package['ntp']
 		# pattern	=> 'ntpd',
+	}
+
+	file{ '/etc/ntp.conf':
+		ensure	=> file,
+		owner	=> 'root',
+		group	=> 'root',
+		mode	=> '0644',
+		source	=> 'puppet:///modules/bootstrap/ntp.conf',
+		notify	=> Service['ntpd'],
 	}
 
 	service { 'firewalld':
@@ -84,19 +89,33 @@ class bootstrap {
 		# mirrorlist	=> '',
 	# }
 
+	service { 'unbound':
+		ensure	=> running,
+		enable	=> true,
+	}
 
-	file{ '/etc/ntp/ntp.conf':
+	file { '/etc/unbound/unbound.conf':
 		ensure	=> file,
 		owner	=> 'root',
 		group	=> 'root',
 		mode	=> '0644',
-		source	=> 'puppet:///modules/bootstrap/ntp.conf',
-		notify	=> Service['ntpd'],
+		source	=> 'puppet:///modules/bootstrap/unbound.conf',
+		notify	=> Service['unbound'],
 	}
 
 	exec{'yum-update':
 		command	=> 'yum update -y'
+	service {'NetworkManager':
+		ensure	=> running,
+		enable	=> true,
 	}
 
-	# include bootstrap::cloudstack
+	file { '/etc/NetworkManager/NetworkManager.conf':
+		ensure	=> file,
+		owner	=> 'root',
+		group	=> 'root',
+		mode	=> '0644',
+		source	=> 'puppet:///modules/bootstrap/NetworkManager.conf',
+		notify	=> Service['NetworkManager'],
+	}
 }
