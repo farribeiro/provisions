@@ -57,6 +57,11 @@ class bootstrap {
 		ensure	=> present,
 	}
 
+	exec {'yum-update':
+		cmd		=> 'yum update -y',
+		refreshonly	=> true,
+	}
+
 	service { 'ntpd':
 		ensure		=> running,
 		enable		=> true,
@@ -103,8 +108,6 @@ class bootstrap {
 		notify	=> Service['unbound'],
 	}
 
-	exec{'yum-update':
-		command	=> 'yum update -y'
 	service {'NetworkManager':
 		ensure	=> running,
 		enable	=> true,
