@@ -20,6 +20,7 @@ class bootstrap {
 		#openldap-clients
 		#pam_krb5
 		#puppet
+		adcli,
 		aria2,
 		at,
 		bzip2,
@@ -40,8 +41,14 @@ class bootstrap {
 		nmap,
 		ntp,
 		ntpdate,
+		oddjob-mkhomedir,
+		oddjob,
 		open-vm-tools,
 		rsync,
+		samba-common,
+		samba-winbind-clients,
+		samba-winbind,
+		sssd,
 		sudo,
 		tcpdump,
 		tig,
