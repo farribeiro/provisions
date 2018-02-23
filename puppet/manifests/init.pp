@@ -128,4 +128,68 @@ class bootstrap {
 		source	=> 'puppet:///modules/bootstrap/NetworkManager.conf',
 		notify	=> Service['NetworkManager'],
 	}
+
+	$domain		= [ 'bradw01.local' ]
+	$domain_u	= [ 'BRADW01.LOCAL ' ]
+	$user_ad	= [ '' ]
+	$pwd_ad		= [ '' ]
+
+	exec{ 'authconfig':
+		command => '
+			authconfig \
+			--enablekrb5 \
+			--krb5kdc=$domain \
+			--krb5adminserver=$domain_u \
+			--krb5realm=$domain \
+			--enablesssd \
+			--enablesssdauth \
+			--update
+		',
+		refreshonly	=> true,
+		before		=> Exec['join-ad'],
+	}
+
+	exec{ 'join-ad':
+		command		=> 'adcli join $domain -U $user_ad -p $pwd_ad',
+		refreshonly	=> true,
+		notify		=>
+	}
+
+	service { 'sssd':
+		ensure	=> running,
+		enable	=> true,
+	}
+
+	file { '/etc/sssd/sssd.conf':
+		ensure	=> file,
+		owner	=> 'root',
+		group	=> 'root',
+		mode	=> '0600',
+		source	=> 'puppet:///modules/bootstrap/sssd.conf',
+	}
+
+	file { '/etc/pam.d/system-auth'
+		ensure	=> present,
+		owner	=> 'root',
+		group	=> 'root',
+		mode	=> '0644',
+		notify	=> Service['sssd'],
+	}->
+	file_line { 'Append a line to /tmp/eureka.txt':
+		path	=> '/etc/pam.d/system-auth',
+		line	=> 'session     optional      pam_mkhomedir.so skel=/etc/skel umask=077',
+	}
+
+	service { 'winbind':
+		ensure	=> running,
+		enable	=> true,
+	}
+
+	file { '/etc/ssh/sshd_config':
+		ensure	=> present,
+	}->
+	file_line { 'Append line':
+		path	=> '/etc/ssh/sshd_config',
+		line	=> 'AllowGroups linuxadmins',
+	}
 }
