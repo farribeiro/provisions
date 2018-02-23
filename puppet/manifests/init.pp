@@ -10,6 +10,16 @@ class bootstrap {
 	}
 
 	$package_utils = [
+		# openvm-tools-nox11,
+		# xzip,
+		#dnf
+		#krb5-workstation
+		#net-tools
+		#nscd
+		#nss-pam-ldapd
+		#openldap-clients
+		#pam_krb5
+		#puppet
 		aria2,
 		at,
 		bzip2,
@@ -25,13 +35,12 @@ class bootstrap {
 		man,
 		most,
 		mutt,
-		net-snmp,
 		net-snmp-utils,
+		net-snmp,
 		nmap,
 		ntp,
 		ntpdate,
 		open-vm-tools,
-		# openvm-tools-nox11,
 		rsync,
 		sudo,
 		tcpdump,
@@ -39,22 +48,18 @@ class bootstrap {
 		tmux,
 		traceroute,
 		tzdata,
-		unzip,
 		unbound,
-		# xzip,
-		#openldap-clients
-		#dnf
-		#krb5-workstation
-		#net-tools
-		#nscd
-		#nss-pam-ldapd
-		#pam_krb5
-		#puppet
+		unzip,
 	]
 
 	package {
 		$package_utils:
 		ensure	=> present,
+	}
+
+	exec {'yum-update':
+		cmd		=> 'yum update -y',
+		refreshonly	=> true,
 	}
 
 	service { 'ntpd':
@@ -103,8 +108,6 @@ class bootstrap {
 		notify	=> Service['unbound'],
 	}
 
-	exec{'yum-update':
-		command	=> 'yum update -y'
 	service {'NetworkManager':
 		ensure	=> running,
 		enable	=> true,
