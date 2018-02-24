@@ -188,6 +188,7 @@ class bootstrap {
 
 	file { '/etc/ssh/sshd_config':
 		ensure	=> present,
+		notify	=> Service['sshd'],
 	}->
 	file_line { 'Append line':
 		path	=> '/etc/ssh/sshd_config',
