@@ -58,7 +58,7 @@ class bootstrap {
 	}
 
 	exec {'yum-update':
-		cmd		=> 'yum update -y',
+		command		=> 'yum update -y',
 		refreshonly	=> true,
 	}
 
