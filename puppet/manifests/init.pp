@@ -166,6 +166,7 @@ class bootstrap {
 		group	=> 'root',
 		mode	=> '0600',
 		source	=> 'puppet:///modules/bootstrap/sssd.conf',
+		require	=> Package['sssd'],
 	}
 
 	file { '/etc/pam.d/system-auth'
