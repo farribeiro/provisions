@@ -183,6 +183,43 @@ class bootstrap {
 	}
 
 	service { 'winbind':
+	exec { 'keygen-ssh':
+		command	=> 'ssh-keygen -t rsa',
+		notify	=> Exec['copy-ssh'],
+	}
+
+	$ip_machine_bk = [''],
+
+	exec { 'copy-ssh':
+		command	=> 'ssh-copy-id $ip_machine_bk',
+		notify	=> Exec['coro-keygen'],
+	}
+
+	exec { 'coro-keygen':
+		command	=> 'corosync -keygen',
+		notify	=> Exec['send-key'],
+	}
+
+	# exec { 'send-key'
+		# command	=> 'scp /etc/corosync/authkey $ip_machine_bk:/etc/corosync/authkey',
+		# notify	=> Exec[']
+	# }
+
+	file { '/etc/default/corosync':
+		ensure	=> file,
+		owner	=> 'root',
+		group	=> 'root',
+		mode	=> '0644',
+		notify	=> Exec['sed-corosync'],
+		puppet	=> 'puppet:///modules/bootstrap/corosync'
+	}
+
+	# exec { 'sed-corosync':
+		# command	=> 'sed -i 's/START=no/START=yes/g' /etc/default/corosync',
+		# notify	=>
+	}
+
+	service { 'corosync':
 		ensure	=> running,
 		enable	=> true,
 	}
@@ -192,6 +229,16 @@ class bootstrap {
 		owner	=> 'root',
 		group	=> 'root',
 		mode	=> '0644',
+	}
+	
+	file { '/etc/corosync/corosync.conf':
+		ensure	=> file,
+		owner	=> 'root',
+		group	=> 'root',
+		mode	=> '0644',
+		source	=> 'puppet:///modules/bootstrap/corosync.conf',
+		notify	=> Service['corosync'],
+	
 	}
 
 	exec { 'sshd-groups':
