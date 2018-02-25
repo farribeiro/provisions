@@ -44,6 +44,7 @@ class bootstrap {
 		oddjob-mkhomedir,
 		oddjob,
 		open-vm-tools,
+		pacemaker,
 		rsync,
 		samba-common,
 		samba-winbind-clients,
