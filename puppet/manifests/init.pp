@@ -174,11 +174,9 @@ class bootstrap {
 		owner	=> 'root',
 		group	=> 'root',
 		mode	=> '0644',
+	exec { 'add-pamd':
+		command => 'echo "session	optional	pam_mkhomedir.so skel=/etc/skel umask=077" >> /etc/pam.d/system-auth',
 		notify	=> Service['sssd'],
-	}->
-	file_line { 'Append a line to /tmp/eureka.txt':
-		path	=> '/etc/pam.d/system-auth',
-		line	=> 'session     optional      pam_mkhomedir.so skel=/etc/skel umask=077',
 	}
 
 	service { 'winbind':
@@ -188,10 +186,8 @@ class bootstrap {
 
 	file { '/etc/ssh/sshd_config':
 		ensure	=> present,
+	exec { 'sshd-groups':
+		command => 'echo "AllowGroups linuxadmins" >> /etc/ssh/sshd_config',
 		notify	=> Service['sshd'],
-	}->
-	file_line { 'Append line':
-		path	=> '/etc/ssh/sshd_config',
-		line	=> 'AllowGroups linuxadmins',
 	}
 }
