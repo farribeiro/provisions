@@ -170,6 +170,8 @@ class bootstrap {
 
 	file { '/etc/pam.d/system-auth':
 		ensure	=> present,
+	}
+
 	exec { 'add-pamd':
 		command => 'echo "session	optional	pam_mkhomedir.so skel=/etc/skel umask=077" >> /etc/pam.d/system-auth',
 		notify	=> Service['sssd'],
