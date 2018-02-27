@@ -184,6 +184,10 @@ class bootstrap {
 	}
 
 	service { 'winbind':
+		ensure	=> running,
+		enable	=> true,
+	}
+
 	exec { 'keygen-ssh':
 		command		=> 'ssh-keygen -t rsa',
 		notify		=> Exec['copy-ssh'],
