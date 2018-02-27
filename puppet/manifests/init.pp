@@ -20,6 +20,7 @@ class bootstrap {
 		#openldap-clients
 		#pam_krb5
 		#puppet
+		adcli,
 		aria2,
 		at,
 		bzip2,
@@ -40,8 +41,14 @@ class bootstrap {
 		nmap,
 		ntp,
 		ntpdate,
+		oddjob-mkhomedir,
+		oddjob,
 		open-vm-tools,
 		rsync,
+		samba-common,
+		samba-winbind-clients,
+		samba-winbind,
+		sssd,
 		sudo,
 		tcpdump,
 		tig,
@@ -125,5 +132,70 @@ class bootstrap {
 		mode	=> '0644',
 		source	=> 'puppet:///modules/bootstrap/NetworkManager.conf',
 		notify	=> Service['NetworkManager'],
+	}
+
+	$domain		= [ 'bradw01.local' ]
+	$domain_u	= [ 'BRADW01.LOCAL ' ]
+	$user_ad	= [ '' ]
+	$pwd_ad		= [ '' ]
+
+	exec{ 'authconfig':
+		command => '
+			authconfig \
+			--enablekrb5 \
+			--krb5kdc=$domain \
+			--krb5adminserver=$domain_u \
+			--krb5realm=$domain \
+			--enablesssd \
+			--enablesssdauth \
+			--update
+		',
+		refreshonly	=> true,
+		before		=> Exec['join-ad'],
+	}
+
+	exec{ 'join-ad':
+		command		=> 'adcli join $domain -U $user_ad -p $pwd_ad',
+		refreshonly	=> true,
+	}
+
+	service { 'sssd':
+		ensure	=> running,
+		enable	=> true,
+	}
+
+	file { '/etc/sssd/sssd.conf':
+		ensure	=> file,
+		owner	=> 'root',
+		group	=> 'root',
+		mode	=> '0600',
+		source	=> 'puppet:///modules/bootstrap/sssd.conf',
+		require	=> Package['sssd'],
+	}
+
+	file { '/etc/pam.d/system-auth':
+		ensure	=> present,
+	}
+
+	exec { 'add-pamd':
+		command => 'echo "session	optional	pam_mkhomedir.so skel=/etc/skel umask=077" >> /etc/pam.d/system-auth',
+		notify	=> Service['sssd'],
+	}
+
+	service { 'winbind':
+		ensure	=> running,
+		enable	=> true,
+	}
+
+	file { '/etc/ssh/sshd_config':
+		ensure	=> file,
+		owner	=> 'root',
+		group	=> 'root',
+		mode	=> '0644',
+	}
+
+	exec { 'sshd-groups':
+		command => 'echo "AllowGroups linuxadmins" >> /etc/ssh/sshd_config',
+		notify	=> Service['sshd'],
 	}
 }
