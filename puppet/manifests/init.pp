@@ -60,8 +60,7 @@ class bootstrap {
 		unzip,
 	]
 
-	package {
-		$package_utils:
+	package { $package_utils:
 		ensure	=> present,
 	}
 
