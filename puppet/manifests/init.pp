@@ -234,7 +234,7 @@ class bootstrap {
 		ensure	=> file,
 		owner	=> 'root',
 		group	=> 'root',
-		mode	=> '0644',
+		mode	=> '0600',
 	}
 	
 	file { '/etc/corosync/corosync.conf':
