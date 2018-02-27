@@ -217,7 +217,6 @@ class bootstrap {
 		group	=> 'root',
 		mode	=> '0644',
 		notify	=> Exec['sed-corosync'],
-		puppet	=> 'puppet:///modules/bootstrap/corosync'
 	}
 
 	# exec { 'sed-corosync':
