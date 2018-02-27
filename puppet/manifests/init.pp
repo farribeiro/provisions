@@ -5,7 +5,7 @@ class bootstrap {
 	}
 
 	host{ 'localhost':
-		ip	=> '127.0.0.1',
+		ip	=> ['127.0.0.1', '::1'],
 		ensure	=> present,
 	}
 
