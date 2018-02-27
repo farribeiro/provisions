@@ -152,7 +152,6 @@ class bootstrap {
 	exec{ 'join-ad':
 		command		=> 'adcli join $domain -U $user_ad -p $pwd_ad',
 		refreshonly	=> true,
-		notify		=>
 	}
 
 	service { 'sssd':
