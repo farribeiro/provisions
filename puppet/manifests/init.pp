@@ -219,8 +219,9 @@ class bootstrap {
 		notify	=> Exec['sed-corosync'],
 	}
 
-	# exec { 'sed-corosync':
-		# command	=> 'sed -i 's/START=no/START=yes/g' /etc/default/corosync',
+	exec { 'sed-corosync':
+		command		=> 'sed -i \'s/START=no/START=yes/g\' /etc/default/corosync',
+		refreshonly	=> true,
 		# notify	=>
 	}
 
