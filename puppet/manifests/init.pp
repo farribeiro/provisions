@@ -169,7 +169,7 @@ class bootstrap {
 		require	=> Package['sssd'],
 	}
 
-	file { '/etc/pam.d/system-auth'
+	file { '/etc/pam.d/system-auth':
 		ensure	=> present,
 		owner	=> 'root',
 		group	=> 'root',
