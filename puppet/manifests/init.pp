@@ -62,6 +62,11 @@ class bootstrap {
 		refreshonly	=> true,
 	}
 
+	service{ 'sshd':
+		ensure	=> running,
+		enable	=> present,
+	}
+
 	service { 'ntpd':
 		ensure		=> running,
 		enable		=> true,
