@@ -171,9 +171,6 @@ class bootstrap {
 
 	file { '/etc/pam.d/system-auth':
 		ensure	=> present,
-		owner	=> 'root',
-		group	=> 'root',
-		mode	=> '0644',
 	exec { 'add-pamd':
 		command => 'echo "session	optional	pam_mkhomedir.so skel=/etc/skel umask=077" >> /etc/pam.d/system-auth',
 		notify	=> Service['sssd'],
@@ -185,7 +182,12 @@ class bootstrap {
 	}
 
 	file { '/etc/ssh/sshd_config':
-		ensure	=> present,
+		ensure	=> file,
+		owner	=> 'root',
+		group	=> 'root',
+		mode	=> '0644',
+	}
+
 	exec { 'sshd-groups':
 		command => 'echo "AllowGroups linuxadmins" >> /etc/ssh/sshd_config',
 		notify	=> Service['sshd'],
