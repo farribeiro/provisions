@@ -179,26 +179,27 @@ class bootstrap {
 	}
 
 	exec { 'add-pamd':
-		command => 'echo "session	optional	pam_mkhomedir.so skel=/etc/skel umask=077" >> /etc/pam.d/system-auth',
-		notify	=> Service['sssd'],
+		command		=> 'echo "session	optional	pam_mkhomedir.so skel=/etc/skel umask=077" >> /etc/pam.d/system-auth',
+		notify		=> Service['sssd'],
 	}
 
 	service { 'winbind':
 	exec { 'keygen-ssh':
-		command	=> 'ssh-keygen -t rsa',
-		notify	=> Exec['copy-ssh'],
+		command		=> 'ssh-keygen -t rsa',
+		notify		=> Exec['copy-ssh'],
 	}
 
 	$ip_machine_bk = [''],
 
 	exec { 'copy-ssh':
-		command	=> 'ssh-copy-id $ip_machine_bk',
-		notify	=> Exec['coro-keygen'],
+		command		=> 'ssh-copy-id $ip_machine_bk',
+		notify		=> Exec['coro-keygen'],
 	}
 
 	exec { 'coro-keygen':
-		command	=> 'corosync -keygen',
-		notify	=> Exec['send-key'],
+		command		=> 'corosync -keygen',
+		refreshonly	=> true,
+		# notify	=> Exec['send-key'],
 	}
 
 	# exec { 'send-key'
@@ -243,7 +244,8 @@ class bootstrap {
 	}
 
 	exec { 'sshd-groups':
-		command => 'echo "AllowGroups linuxadmins" >> /etc/ssh/sshd_config',
-		notify	=> Service['sshd'],
+		command		=> 'echo "AllowGroups linuxadmins" >> /etc/ssh/sshd_config',
+		refreshonly	=> true,
+		notify		=> Service['sshd'],
 	}
 }
