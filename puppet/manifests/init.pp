@@ -66,7 +66,7 @@ class bootstrap {
 
 	service{ 'sshd':
 		ensure	=> running,
-		enable	=> present,
+		enable	=> true,
 	}
 
 	service { 'ntpd':
