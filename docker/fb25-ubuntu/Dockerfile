@@ -1,17 +1,20 @@
-FROM docker.io/ubuntu
+FROM ubuntu:latest
 MAINTAINER Fábio Rodrigues Ribeiro <farribeiro@gmail.com>
 
 RUN	\
 	apt-get update \
-	&& apt-get upgrade -y
-RUN	apt-get install -y \
+	&& apt-get upgrade -y \
+	&& apt-get install -y \
 	libstdc++5 \
-	firebird2.5-superclassic
+	firebird2.5-superclassic \
+	--no-install-recommends
 
+VOLUME	"/mnt/"
 
-VOLUME [ "/mnt/" ]
+EXPOSE	3050
 
-WORKDIR [ "/mnt/" ]
-EXPOSE 3050
+COPY	startup.sh /
 
-CMD ["/usr/sbin/fbguard"]
+RUN	chmod 744 startup.sh
+
+CMD	"/startup.sh"
