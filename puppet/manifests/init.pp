@@ -5,7 +5,7 @@ class bootstrap {
 	}
 
 	host{ 'localhost':
-		ip	=> '127.0.0.1',
+		ip	=> ['127.0.0.1', '::1'],
 		ensure	=> present,
 	}
 
@@ -60,19 +60,13 @@ class bootstrap {
 		unzip,
 	]
 
-	package {
-		$package_utils:
+	package { $package_utils:
 		ensure	=> present,
-	}
-
-	exec {'yum-update':
-		command		=> 'yum update -y',
-		refreshonly	=> true,
 	}
 
 	service{ 'sshd':
 		ensure	=> running,
-		enable	=> present,
+		enable	=> true,
 	}
 
 	service { 'ntpd':
@@ -179,26 +173,31 @@ class bootstrap {
 	}
 
 	exec { 'add-pamd':
-		command => 'echo "session	optional	pam_mkhomedir.so skel=/etc/skel umask=077" >> /etc/pam.d/system-auth',
-		notify	=> Service['sssd'],
+		command		=> 'echo "session	optional	pam_mkhomedir.so skel=/etc/skel umask=077" >> /etc/pam.d/system-auth',
+		notify		=> Service['sssd'],
 	}
 
 	service { 'winbind':
+		ensure	=> running,
+		enable	=> true,
+	}
+
 	exec { 'keygen-ssh':
-		command	=> 'ssh-keygen -t rsa',
-		notify	=> Exec['copy-ssh'],
+		command		=> 'ssh-keygen -t rsa',
+		notify		=> Exec['copy-ssh'],
 	}
 
 	$ip_machine_bk = [''],
 
 	exec { 'copy-ssh':
-		command	=> 'ssh-copy-id $ip_machine_bk',
-		notify	=> Exec['coro-keygen'],
+		command		=> 'ssh-copy-id $ip_machine_bk',
+		notify		=> Exec['coro-keygen'],
 	}
 
 	exec { 'coro-keygen':
-		command	=> 'corosync -keygen',
-		notify	=> Exec['send-key'],
+		command		=> 'corosync -keygen',
+		refreshonly	=> true,
+		# notify	=> Exec['send-key'],
 	}
 
 	# exec { 'send-key'
@@ -212,11 +211,11 @@ class bootstrap {
 		group	=> 'root',
 		mode	=> '0644',
 		notify	=> Exec['sed-corosync'],
-		puppet	=> 'puppet:///modules/bootstrap/corosync'
 	}
 
-	# exec { 'sed-corosync':
-		# command	=> 'sed -i 's/START=no/START=yes/g' /etc/default/corosync',
+	exec { 'sed-corosync':
+		command		=> 'sed -i \'s/START=no/START=yes/g\' /etc/default/corosync',
+		refreshonly	=> true,
 		# notify	=>
 	}
 
@@ -229,7 +228,7 @@ class bootstrap {
 		ensure	=> file,
 		owner	=> 'root',
 		group	=> 'root',
-		mode	=> '0644',
+		mode	=> '0600',
 	}
 	
 	file { '/etc/corosync/corosync.conf':
@@ -243,7 +242,8 @@ class bootstrap {
 	}
 
 	exec { 'sshd-groups':
-		command => 'echo "AllowGroups linuxadmins" >> /etc/ssh/sshd_config',
-		notify	=> Service['sshd'],
+		command		=> 'echo "AllowGroups linuxadmins" >> /etc/ssh/sshd_config',
+		refreshonly	=> true,
+		notify		=> Service['sshd'],
 	}
 }
