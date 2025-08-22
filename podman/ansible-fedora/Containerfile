@@ -1,4 +1,5 @@
-FROM farribeiro/fedora
+FROM fedora:latest
+
 MAINTAINER Fábio Rodrigues Ribeiro <farribeiro@gmail.com>
 
 RUN	\
