@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-MAINTAINER Fábio Rodrigues Ribeiro <farribeiro@gmail.com>
+LABEL maintainer "Fabio Rodrigues Ribeiro <farribeiro@gmail.com>"
 
 RUN	\
 	apt-get update \
